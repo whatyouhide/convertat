@@ -18,6 +18,7 @@ defmodule Convertat do
       iex> "foo" |> Convertat.from_base(["f", "o"])
       3
   """
+  @spec from_base(String.t | list, integer | list) :: integer
   def from_base(digits, source_base)
 
   def from_base("", _), do: 0
@@ -60,6 +61,7 @@ defmodule Convertat do
       iex> 6 |> Convertat.to_base(["foo", "bar"], as_list: true)
       ["bar", "bar", "foo"]
   """
+  @spec to_base(integer, integer | list, [Keyword]) :: String.t | list
   def to_base(val, base, opts \\ [as_list: false])
 
   def to_base(val, base, opts) when is_integer(base) and base in 2..36 do
