@@ -1,6 +1,8 @@
 defmodule ConvertatFacts do
   use ExUnit.Case, async: true
 
+  doctest Convertat
+
   alias Convertat, as: C
 
   @base2 ["0", "1"]

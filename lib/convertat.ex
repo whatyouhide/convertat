@@ -6,6 +6,17 @@ defmodule Convertat do
   @doc """
   Convert any string of digits or list of digits (where each digit is a string)
   to a value in decimal base (base 10), given a starting base.
+
+  ## Examples
+
+      iex> "101" |> Convertat.from_base(2)
+      5
+
+      iex> "fe" |> Convertat.from_base(16)
+      254
+
+      iex> "foo" |> Convertat.from_base(["f", "o"])
+      3
   """
   def from_base(digits, source_base)
 
@@ -37,6 +48,17 @@ defmodule Convertat do
   Convert a value in decimal base (`val`) to an arbitrary base. If the
   `:as_list` option is true, the resulting value in base `base` will be returned
   as a list of digits.
+
+  ## Examples
+
+      iex> 35 |> Convertat.to_base(36)
+      "z"
+
+      iex> 11 |> Convertat.to_base(["a", "b"])
+      "babb"
+
+      iex> 6 |> Convertat.to_base(["foo", "bar"], as_list: true)
+      ["bar", "bar", "foo"]
   """
   def to_base(val, base, opts \\ [as_list: false])
 

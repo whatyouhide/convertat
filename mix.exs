@@ -4,6 +4,8 @@ defmodule Convertat.Mixfile do
   def project do
     [app: :convertat,
      version: "0.0.1",
+     name: "Convertat",
+     source_url: "https://github.com/whatyouhide/convertat",
      elixir: "~> 1.0",
      deps: deps]
   end
