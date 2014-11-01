@@ -1,4 +1,4 @@
-defmodule ConvertatTest do
+defmodule ConvertatFacts do
   use ExUnit.Case, async: true
 
   alias Convertat, as: C
@@ -45,6 +45,14 @@ defmodule ConvertatTest do
     assert C.from_base("kba", base) === 21
   end
 
+  test "from_base with integer base" do
+    assert C.from_base("01", 2) === 1
+    assert C.from_base('101', 2) === 5
+    assert C.from_base("10", 13) === 13
+    assert C.from_base('fe', 16) === 254
+    assert C.from_base("z", 36) === 35
+  end
+
   test "to_base with array base and string result" do
     assert C.to_base(10, @base2)  === "1010"
     assert C.to_base(0, @base2)   === "0"
@@ -64,6 +72,15 @@ defmodule ConvertatTest do
     assert C.to_base(254, @base16, as_list: true) === ["f", "e"]
   end
 
+  test "to_base with integer base" do
+    assert C.to_base(10, 2) === "1010"
+    assert C.to_base(0, 16) === "0"
+    assert C.to_base(254, 16) === "fe"
+    assert C.to_base(19, 19) === "10"
+    assert C.to_base(35, 36, as_list: true) === ["z"]
+    assert C.to_base(11, 2, as_list: true) === ["1", "0", "1", "1"]
+  end
+
   test "entire chain in base 2" do
     actual = "1010" |> C.from_base(@base2) |> C.to_base(@base16)
     assert actual === "a"
@@ -72,5 +89,10 @@ defmodule ConvertatTest do
   test "entire chain in base 16" do
     actual = "fe" |> C.from_base(@base16) |> C.to_base(@base2)
     assert actual === "11111110"
+  end
+
+  test "entire chain in exoteric base" do
+    actual = "kikki" |> C.from_base(["k", "i"]) |> C.to_base(@base2)
+    assert actual === "1001"
   end
 end

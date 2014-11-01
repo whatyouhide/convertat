@@ -1,7 +1,22 @@
 defmodule Convertat do
+  @moduledoc """
+  Provides functions for converting **from** and **to** arbitrary bases.
+  """
+
+  @doc """
+  Convert any string of digits or list of digits (where each digit is a string)
+  to a value in decimal base (base 10), given a starting base.
+  """
+  def from_base(digits, source_base)
+
   def from_base("", _), do: 0
 
   def from_base([], _), do: 0
+
+  def from_base(digits, base) when is_integer(base) and base in 2..36 do
+    digits = if is_binary(digits), do: to_char_list(digits), else: digits
+    List.to_integer(digits, base)
+  end
 
   def from_base(digits, source_base) when is_binary(digits) do
     digits |> String.codepoints |> from_base(source_base)
@@ -18,13 +33,27 @@ defmodule Convertat do
   end
 
 
+  @doc """
+  Convert a value in decimal base (`val`) to an arbitrary base. If the
+  `:as_list` option is true, the resulting value in base `base` will be returned
+  as a list of digits.
+  """
   def to_base(val, base, opts \\ [as_list: false])
+
+  def to_base(val, base, opts) when is_integer(base) and base in 2..36 do
+    result = val |> Integer.to_string(base) |> String.downcase
+    if opts[:as_list], do: String.codepoints(result), else: result
+  end
+
   def to_base(0, base, as_list: false), do: zero_digit(base)
+
   def to_base(0, base, as_list: true), do: List.wrap(zero_digit(base))
+
   def to_base(val, base, opts) do
     result = _to_base(val, base) |> Enum.reverse
     if opts[:as_list], do: result, else: Enum.join(result)
   end
+
 
   defp _to_base(val, _base) when val == 0, do: []
   defp _to_base(val, base) do
