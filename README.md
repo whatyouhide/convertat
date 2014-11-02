@@ -13,7 +13,7 @@ defp deps do
   [
     # Using the hex package manager:
     {:convertat, "~> 1.0"},
-    # or grabbing the lastes version (master branch) from GitHub:
+    # or grabbing the latest version (master branch) from GitHub:
     {:convertat, github: "whatyouhide/convertat"},
   ]
 end
