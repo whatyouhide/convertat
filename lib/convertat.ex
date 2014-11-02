@@ -17,6 +17,9 @@ defmodule Convertat do
 
       iex> "foo" |> Convertat.from_base(["f", "o"])
       3
+
+      iex> "↑" |> Convertat.from_base(["↓", "↑"])
+      1
   """
   @spec from_base(String.t | list, integer | list) :: integer
   def from_base(digits, source_base)
@@ -60,6 +63,9 @@ defmodule Convertat do
 
       iex> 6 |> Convertat.to_base(["foo", "bar"], as_list: true)
       ["bar", "bar", "foo"]
+
+      iex> 10 |> Convertat.to_base(["↓", "↑"])
+      "↑↓↑↓"
   """
   @spec to_base(integer, integer | list, [Keyword]) :: String.t | list
   def to_base(val, base, opts \\ [as_list: false])

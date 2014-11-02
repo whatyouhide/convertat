@@ -1,6 +1,7 @@
 defmodule ConvertatFacts do
   use ExUnit.Case, async: true
 
+  # Run tests in the docstrings.
   doctest Convertat
 
   alias Convertat, as: C
@@ -96,5 +97,14 @@ defmodule ConvertatFacts do
   test "entire chain in exoteric base" do
     actual = "kikki" |> C.from_base(["k", "i"]) |> C.to_base(@base2)
     assert actual === "1001"
+  end
+
+  test "entire chain with unicode characters" do
+    base = ["↓", "↑"]
+    assert C.from_base("↓↓↓", base) === 0
+    assert C.from_base("↑↓", base) === 2
+
+    assert C.to_base(2, base) === "↑↓"
+    assert C.to_base(0, base) === "↓"
   end
 end
