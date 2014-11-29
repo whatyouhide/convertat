@@ -50,9 +50,7 @@ defmodule ConvertatFacts do
 
   test "from_base with integer base" do
     assert C.from_base("01", 2) === 1
-    assert C.from_base('101', 2) === 5
     assert C.from_base("10", 13) === 13
-    assert C.from_base('fe', 16) === 254
     assert C.from_base("z", 36) === 35
   end
 

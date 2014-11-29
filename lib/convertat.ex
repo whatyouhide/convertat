@@ -1,4 +1,6 @@
 defmodule Convertat do
+  @type base :: non_neg_integer | list(String.t)
+
   @moduledoc """
   Provides functions for converting **from** and **to** arbitrary bases.
   """
@@ -20,17 +22,21 @@ defmodule Convertat do
 
       iex> "↑" |> Convertat.from_base(["↓", "↑"])
       1
+
+      iex> ["foo", "bar"] |> Convertat.from_base(["bar", "foo"])
+      2
   """
-  @spec from_base(String.t | list, integer | list) :: integer
+  @spec from_base(String.t | list(String.t), base) :: non_neg_integer
   def from_base(digits, source_base)
 
   def from_base("", _), do: 0
 
   def from_base([], _), do: 0
 
-  def from_base(digits, base) when is_integer(base) and base in 2..36 do
-    digits = if is_binary(digits), do: to_char_list(digits), else: digits
-    List.to_integer(digits, base)
+  def from_base(digits, base) when is_binary(digits)
+  and is_integer(base)
+  and base in 2..36 do
+    String.to_integer(digits, base)
   end
 
   def from_base(digits, source_base) when is_binary(digits) do
@@ -39,11 +45,13 @@ defmodule Convertat do
 
   def from_base(digits, source_base) do
     numeric_base = Enum.count(source_base)
-    source_base = Enum.map source_base, &to_string/1
+    digits_map = source_base
+                  |> Enum.map(&to_string/1)
+                  |> Enum.with_index
+                  |> Enum.into(%{})
 
-    digits_with_indexes = digits |> Enum.reverse |> Enum.with_index
-    Enum.reduce(digits_with_indexes, 0, fn({digit, i}, acc) ->
-      acc + digit_value_in_base10(source_base, digit) * pow(numeric_base, i)
+    Enum.reduce(digits, 0, fn(digit, acc) ->
+      Dict.get(digits_map, digit) + numeric_base * acc
     end)
   end
 
@@ -67,7 +75,7 @@ defmodule Convertat do
       iex> 10 |> Convertat.to_base(["↓", "↑"])
       "↑↓↑↓"
   """
-  @spec to_base(integer, integer | list, [Keyword]) :: String.t | list
+  @spec to_base(non_neg_integer, base, [Keyword]) :: String.t | list(String.t)
   def to_base(val, base, opts \\ [as_list: false])
 
   def to_base(val, base, opts) when is_integer(base) and base in 2..36 do
@@ -84,7 +92,7 @@ defmodule Convertat do
     if opts[:as_list], do: result, else: Enum.join(result)
   end
 
-
+  @spec _to_base(non_neg_integer, base) :: list(String.t)
   defp _to_base(val, _base) when val == 0, do: []
   defp _to_base(val, base) do
     numeric_base = Enum.count(base)
@@ -92,18 +100,6 @@ defmodule Convertat do
     [ digit | _to_base(div(val, numeric_base), base) ]
   end
 
+  @spec zero_digit(base) :: String.t
   defp zero_digit(base), do: base |> Enum.at(0) |> to_string
-
-  defp digit_value_in_base10(base, digit) do
-    base |> Enum.find_index(&(&1 === digit))
-  end
-
-  # Fast exponentiation.
-  defp pow(_, 0), do: 1
-  defp pow(1, _), do: 1
-  defp pow(base, exp) when rem(exp, 2) === 1, do: base * pow(base, exp - 1)
-  defp pow(base, exp) do
-    half = pow(base, div(exp, 2))
-    half * half
-  end
 end
