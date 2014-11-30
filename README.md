@@ -1,6 +1,8 @@
 # Convertat
 
 [![Build Status](https://travis-ci.org/whatyouhide/convertat.svg?branch=master)](https://travis-ci.org/whatyouhide/convertat)
+[![Package](http://img.shields.io/hexpm/v/convertat.svg)](https://hex.pm/packages/convertat)
+[![License](https://img.shields.io/hexpm/l/convertat.svg)](LICENSE.txt)
 
 *Convertat* is a small Elixir library that provides functions for converting
 values **from** and **to** arbitrary bases.
@@ -108,8 +110,8 @@ iex> val |> Convertat.from_base(base)
 2
 ```
 
-One more thing: if you're often converting bases, consider `import`ing the two
-functions for a uber-clean syntax:
+One more thing: if you're converting between bases a lot of times, consider
+`import`ing the two functions for a uber-clean syntax:
 
 ``` elixir
 iex> import Convertat, only: :functions
