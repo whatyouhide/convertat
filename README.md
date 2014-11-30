@@ -4,7 +4,7 @@
 values **from** and **to** arbitrary bases.
 
 
-## Installation
+## Installation and docs
 
 To use this library with Mix, just declare its dependency in the `mix.exs` file:
 
@@ -19,31 +19,38 @@ defp deps do
 end
 ```
 
-Then run `mix deps.get` and go on with your life.
+Then run `mix deps.get`. The documentation for the current and the older
+versions of Convertat can be found on its [hex.pm
+page](https://hex.pm/packages/convertat).
 
 
 ## Usage
 
 Convertat leverages on the power of the `|>` operator in order to provide a
-clean syntax for converting values between bases.
+clean syntax for converting values between bases. The only two functions that it
+exports are `Convertat.from_base/2` and `Convertat.to_base/3`.
 
 For example, say we want to convert the binary value `"11011"` (27 in base 10)
 to its hex representation:
 
 ``` elixir
-"10110" |> Convertat.from_base(2) |> Convertat.to_base(16) #=> "1b"
+iex> "10110" |> Convertat.from_base(2) |> Convertat.to_base(16)
+"1b"
 ```
 
 That's pretty straightforward and, moreover, easily achievable using Elixir's
-standard library. In fact, when using integers as bases, you're limited to the
-standard `2..36` range. What about this:
+standard library (`String.to_integer/2` and `to_string/1`). In fact, when using
+*integers* as bases, you're limited to the standard `2..36` range.
+
+What about this:
 
 ``` elixir
-"↑↓↑" |> Convertat.from_base(["↓", "↑"]) #=> 5
+iex> "↑↓↑" |> Convertat.from_base(["↓", "↑"])
+5
 ```
 
-We just used a (*binary*, since it has two digits) base where the digits are the
-`↓` and `↑` characters.
+We just used a *binary* (it has two digits) base where the digits are the `"↓"`
+and `"↑"` strings.
 
 Digits in list bases are listed from the least significant one to the most
 significant one; in the above example, `↓` would be 0 in the binary base while
@@ -53,19 +60,20 @@ We can also use lists as values (instead of strings); this allows for some cool
 multicharacter-digits bases. Here's another binary base:
 
 ``` elixir
-["foo", "bar"] |> Convertat.from_base(["bar", "foo"]) #=> 2
+iex> ["foo", "bar"] |> Convertat.from_base(["bar", "foo"])
+2
 ```
 
-As you can see, digits significance in list values is the opposite from list
-bases: the least significant digits are on the right, like they would be in
-written numbers.
+As you can see, digits significance in list values is the opposite from bases:
+the least significant digits are on the right, like they would be in written
+numbers.
 
-As you just saw, the `from_base` function converts a value in an arbitrary base
-to an integer in base 10. The `to_base` functions does the opposite: it converts
-an integer (in base 10) into a value in an arbitrary base.
+While the `from_base/2` function converts a value in an arbitrary base to an
+integer in base 10, the `to_base/3` function does the opposite:
 
 ``` elixir
-20 |> Convertat.to_base(["a", "b"]) #=> "babaa"
+iex> 20 |> Convertat.to_base(["a", "b"])
+"babaa"
 ```
 
 As with `from_base`, bases can be integers (in the `2..36` range, just like with
@@ -75,23 +83,51 @@ By default, a string representation of the converted number is returned. You
 can also specify that you want a list:
 
 ``` elixir
-16 |> Convertat.to_base(16, as_list: true) #=> "10"
+iex> 16 |> Convertat.to_base(16, as_list: true)
+["1", "0"]
 ```
 
 This may seem useless, but think of the multichar-digits base from above:
 
 ``` elixir
-2 |> Convertat.to_base(["bar", "foo"]) #=> "foobar"
+iex> 2 |> Convertat.to_base(["bar", "foo"])
+"foobar"
 ```
 
 How can you parse `"foobar"` back into a base 10 value with the same `["bar",
 "foo"]` base?
 
 ``` elixir
-base = ["bar", "foo"]
-val = 2 |> Convertat.to_base(base, as_list: true) #=> val = ["foo", "bar"]
-val |> Convertat.from_base(base) #=> 2
+iex> base = ["bar", "foo"]
+["bar", "foo"]
+iex> val = 2 |> Convertat.to_base(base, as_list: true)
+["foo", "bar"]
+iex> val |> Convertat.from_base(base)
+2
 ```
+
+One more thing: if you're often converting bases, consider `import`ing the two
+functions for a uber-clean syntax:
+
+``` elixir
+iex> import Convertat, only: :functions
+nil
+iex> "1011" |> from_base(2) |> to_base(16)
+"b"
+```
+
+
+## Contributing
+
+If you wish to contribute to this project, well, thanks! You know the deal:
+
+* fork the repository
+* make changes and **add/update tests**
+* make sure the tests pass by running `mix test`
+* commit changes
+* open a pull request
+
+Feel free to open an issue if you find something wrong with the library.
 
 
 ## License
