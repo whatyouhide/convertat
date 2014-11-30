@@ -1,5 +1,7 @@
 # Convertat
 
+[![Build Status](https://travis-ci.org/whatyouhide/convertat.svg?branch=master)](https://travis-ci.org/whatyouhide/convertat)
+
 *Convertat* is a small Elixir library that provides functions for converting
 values **from** and **to** arbitrary bases.
 
