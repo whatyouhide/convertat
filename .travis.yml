@@ -12,6 +12,7 @@ before_install:
   - export PATH="$PATH:$PWD/vendor/elixir/bin"
   - mix local.hex --force
   - mix local.rebar
+  - export MIX_ENV="test"
 
 script:
   - mix deps.get
