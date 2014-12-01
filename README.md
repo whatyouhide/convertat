@@ -1,6 +1,7 @@
 # Convertat
 
 [![Build Status](https://travis-ci.org/whatyouhide/convertat.svg?branch=master)](https://travis-ci.org/whatyouhide/convertat)
+[![Coverage Status](https://img.shields.io/coveralls/whatyouhide/convertat.svg)](https://coveralls.io/r/whatyouhide/convertat)
 [![Package](http://img.shields.io/hexpm/v/convertat.svg)](https://hex.pm/packages/convertat)
 [![License](https://img.shields.io/hexpm/l/convertat.svg)](LICENSE.txt)
 

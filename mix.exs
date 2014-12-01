@@ -12,7 +12,8 @@ defmodule Convertat.Mixfile do
       elixir: "~> 1.0",
       deps: deps,
       package: package,
-      description: description
+      description: description,
+      test_coverage: [tool: ExCoveralls],
     ]
   end
 
@@ -35,6 +36,9 @@ defmodule Convertat.Mixfile do
   end
 
   defp deps do
-    [{:ex_doc, "~> 0.6", only: :dev}]
+    [
+      {:ex_doc, "~> 0.6", only: :dev},
+      {:excoveralls, "~> 0.3", only: :test},
+    ]
   end
 end

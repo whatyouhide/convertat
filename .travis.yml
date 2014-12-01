@@ -16,3 +16,6 @@ before_install:
 script:
   - mix deps.get
   - mix test
+
+after_success:
+  - mix compile && mix coveralls.travis

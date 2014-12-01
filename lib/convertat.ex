@@ -1,5 +1,5 @@
 defmodule Convertat do
-  @type base :: non_neg_integer | list(String.t)
+  @type base :: non_neg_integer | [String.t]
 
   @moduledoc """
   Provides functions for converting **from** and **to** arbitrary bases.
@@ -26,7 +26,7 @@ defmodule Convertat do
       iex> ["foo", "bar"] |> Convertat.from_base(["bar", "foo"])
       2
   """
-  @spec from_base(String.t | list(String.t), base) :: non_neg_integer
+  @spec from_base(String.t | [String.t], base) :: non_neg_integer
   def from_base(digits, source_base)
 
   def from_base("", _), do: 0
@@ -34,8 +34,8 @@ defmodule Convertat do
   def from_base([], _), do: 0
 
   def from_base(digits, base) when is_binary(digits)
-  and is_integer(base)
-  and base in 2..36 do
+    and is_integer(base)
+    and base in 2..36 do
     String.to_integer(digits, base)
   end
 
@@ -75,7 +75,7 @@ defmodule Convertat do
       iex> 10 |> Convertat.to_base(["↓", "↑"])
       "↑↓↑↓"
   """
-  @spec to_base(non_neg_integer, base, [Keyword]) :: String.t | list(String.t)
+  @spec to_base(non_neg_integer, base, [Keyword]) :: String.t | [String.t]
   def to_base(val, base, opts \\ [as_list: false])
 
   def to_base(val, base, opts) when is_integer(base) and base in 2..36 do
@@ -83,16 +83,17 @@ defmodule Convertat do
     if opts[:as_list], do: String.codepoints(result), else: result
   end
 
-  def to_base(0, base, as_list: false), do: zero_digit(base)
-
-  def to_base(0, base, as_list: true), do: List.wrap(zero_digit(base))
+  def to_base(0, base, as_list: as_list) do
+    digit = zero_digit(base)
+    if as_list, do: List.wrap(digit), else: digit
+  end
 
   def to_base(val, base, opts) do
     result = _to_base(val, base) |> Enum.reverse
     if opts[:as_list], do: result, else: Enum.join(result)
   end
 
-  @spec _to_base(non_neg_integer, base) :: list(String.t)
+  @spec _to_base(non_neg_integer, base) :: [String.t]
   defp _to_base(val, _base) when val == 0, do: []
   defp _to_base(val, base) do
     numeric_base = Enum.count(base)
