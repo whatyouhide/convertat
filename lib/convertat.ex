@@ -89,16 +89,16 @@ defmodule Convertat do
   end
 
   def to_base(val, base, opts) do
-    result = _to_base(val, base) |> Enum.reverse
+    result = do_to_base(val, base) |> Enum.reverse
     if opts[:as_list], do: result, else: Enum.join(result)
   end
 
-  @spec _to_base(non_neg_integer, base) :: [String.t]
-  defp _to_base(val, _base) when val == 0, do: []
-  defp _to_base(val, base) do
+  @spec do_to_base(non_neg_integer, base) :: [String.t]
+  defp do_to_base(val, _base) when val == 0, do: []
+  defp do_to_base(val, base) do
     numeric_base = Enum.count(base)
     digit = Enum.at(base, rem(val, numeric_base))
-    [ digit | _to_base(div(val, numeric_base), base) ]
+    [ digit | do_to_base(div(val, numeric_base), base) ]
   end
 
   @spec zero_digit(base) :: String.t
