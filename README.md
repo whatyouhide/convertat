@@ -1,11 +1,11 @@
 # Convertat
 
 [![Build Status](https://travis-ci.org/whatyouhide/convertat.svg?branch=master)](https://travis-ci.org/whatyouhide/convertat)
-[![Coverage Status](https://img.shields.io/coveralls/whatyouhide/convertat.svg)](https://coveralls.io/r/whatyouhide/convertat)
-[![Package](http://img.shields.io/hexpm/v/convertat.svg)](https://hex.pm/packages/convertat)
-[![License](https://img.shields.io/hexpm/l/convertat.svg)](LICENSE.txt)
+[![Coverage Status](https://img.shields.io/coveralls/whatyouhide/convertat.svg?style=flat)](https://coveralls.io/r/whatyouhide/convertat)
+[![Package](http://img.shields.io/hexpm/v/convertat.svg?style=flat)](https://hex.pm/packages/convertat)
+[![License](https://img.shields.io/hexpm/l/convertat.svg?style=flat)](LICENSE.txt)
 
-*Convertat* is a small Elixir library that provides functions for converting
+Convertat is a small Elixir library that provides functions for converting
 values **from** and **to** arbitrary bases.
 
 
