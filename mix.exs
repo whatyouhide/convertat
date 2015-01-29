@@ -37,7 +37,8 @@ defmodule Convertat.Mixfile do
 
   defp deps do
     [
-      {:ex_doc, "~> 0.6", only: :dev},
+      {:ex_doc, "~> 0.6", only: :docs},
+      {:benchfella, github: "alco/benchfella", only: :dev},
       {:excoveralls, "~> 0.3", only: :test},
     ]
   end

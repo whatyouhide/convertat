@@ -126,4 +126,26 @@ defmodule ConvertatFacts do
     assert to_base(2, base) === "↑↓"
     assert to_base(0, base) === "↓"
   end
+
+  test "from_base/2: invalid integer bases" do
+    assert_raise ArgumentError, fn -> from_base("foo", -10) end
+    assert_raise ArgumentError, fn -> from_base("foo", 0) end
+    assert_raise ArgumentError, fn -> from_base("foo", 1) end
+    assert_raise ArgumentError, fn -> from_base("foo", 55) end
+  end
+
+  test "to_base/2: invalid integer bases" do
+    assert_raise ArgumentError, fn -> to_base(42, -10) end
+    assert_raise ArgumentError, fn -> to_base(42, 0) end
+    assert_raise ArgumentError, fn -> to_base(42, 1) end
+    assert_raise ArgumentError, fn -> to_base(42, 55) end
+  end
+
+  test "invalid list bases" do
+    msg = "list bases must have at least two digits"
+    assert_raise ArgumentError, msg, fn -> from_base("foo", []) end
+    assert_raise ArgumentError, msg, fn -> from_base("foo", ["onedigit"]) end
+    assert_raise ArgumentError, msg, fn -> to_base(42, []) end
+    assert_raise ArgumentError, msg, fn -> to_base(42, ["onedigit"]) end
+  end
 end
