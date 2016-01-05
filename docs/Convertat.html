@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Convertat</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <div class="breadcrumbs">Convertat v1.1.0 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Convertat.html">Convertat</a></div>
+
+      <h1>
+        Convertat
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+          <li><a href="#types_details">Types</a></li>
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+      </ul>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Provides functions for converting <strong>from</strong> and <strong>to</strong> arbitrary bases.</p>
+
+        </div>
+      
+
+      
+        <a href="https://github.com/whatyouhide/convertat/blob/master/lib/convertat.ex#L1" class="view_source">Source</a>
+      
+
+      
+        <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#from_base/2">from_base(digits, base)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts any string of digits or list of digits (where each digit is a string) to a value in decimal base (base 10), given a starting base</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_base/3">to_base(val, base, opts \\ [as_list: false])</a></td>
+  
+    <td class="summary_synopsis"><p>Converts a value in decimal base (<code>val</code>, which has to be an integer) to an arbitrary base. If the <code>:as_list</code> option is true, the resulting value in base <code>base</code> will be returned as a list of digits instead of a string of digits</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+        <div id="types_details" class="details_list">
+          <h2>Types <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:integer_base/0">
+    <a href="#t:integer_base/0">integer_base</a> :: 2 .. 36
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:list_base/0">
+    <a href="#t:list_base/0">list_base</a> :: []
+  </p>
+  
+</div>
+
+        </div>
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <div class="detail_header" id="from_base/2">
+    <span class="signature"><strong>from_base(digits, base)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#from_base/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>from_base([] | <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, <a href="#t:list_base/0">list_base</a>) :: integer</li>
+      
+        <li>from_base(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, <a href="#t:integer_base/0">integer_base</a>) :: integer</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Converts any string of digits or list of digits (where each digit is a string) to a value in decimal base (base 10), given a starting base.</p>
+<p>The starting base can be an integer in the <code>2..36</code> range (in which case the native <code>String.to_integer/2</code> function is used) or a list with at least two elements (digits).</p>
+<h2 id="examples">Examples</h2>
+<pre><code>iex&gt; &quot;101&quot; |&gt; Convertat.from_base(2)
+5
+
+iex&gt; &quot;fe&quot; |&gt; Convertat.from_base(16)
+254
+
+iex&gt; &quot;foo&quot; |&gt; Convertat.from_base([&quot;f&quot;, &quot;o&quot;])
+3
+
+iex&gt; &quot;↑&quot; |&gt; Convertat.from_base([&quot;↓&quot;, &quot;↑&quot;])
+1
+
+iex&gt; [&quot;foo&quot;, &quot;bar&quot;] |&gt; Convertat.from_base([&quot;bar&quot;, &quot;foo&quot;])
+2
+
+iex&gt; &quot;test&quot; |&gt; Convertat.from_base([&quot;onedigit&quot;])
+** (ArgumentError) list bases must have at least two digits</code></pre>
+</div>
+  
+    <a href="https://github.com/whatyouhide/convertat/blob/master/lib/convertat.ex#L40" class="view_source">Source</a>
+  
+</div>
+<div class="detail">
+  <div class="detail_header" id="to_base/3">
+    <span class="signature"><strong>to_base(val, base, opts \\ [as_list: false])</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_base/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>to_base(integer, <a href="#t:integer_base/0">integer_base</a> | <a href="#t:list_base/0">list_base</a>, [{:as_list, false}]) :: [<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>]</li>
+      
+        <li>to_base(integer, <a href="#t:integer_base/0">integer_base</a> | <a href="#t:list_base/0">list_base</a>, [{:as_list, true}]) :: [<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>]</li>
+      
+    </ul>
+  
+  <div class="docstring"><p>Converts a value in decimal base (<code>val</code>, which has to be an integer) to an arbitrary base. If the <code>:as_list</code> option is true, the resulting value in base <code>base</code> will be returned as a list of digits instead of a string of digits.</p>
+<h2 id="examples">Examples</h2>
+<pre><code>iex&gt; 35 |&gt; Convertat.to_base(36)
+&quot;z&quot;
+
+iex&gt; 11 |&gt; Convertat.to_base([&quot;a&quot;, &quot;b&quot;])
+&quot;babb&quot;
+
+iex&gt; 6 |&gt; Convertat.to_base([&quot;foo&quot;, &quot;bar&quot;], as_list: true)
+[&quot;bar&quot;, &quot;bar&quot;, &quot;foo&quot;]
+
+iex&gt; 10 |&gt; Convertat.to_base([&quot;↓&quot;, &quot;↑&quot;])
+&quot;↑↓↑↓&quot;
+
+iex&gt; 42 |&gt; Convertat.to_base([&quot;onedigitbase&quot;])
+** (ArgumentError) list bases must have at least two digits</code></pre>
+</div>
+  
+    <a href="https://github.com/whatyouhide/convertat/blob/master/lib/convertat.ex#L93" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>
